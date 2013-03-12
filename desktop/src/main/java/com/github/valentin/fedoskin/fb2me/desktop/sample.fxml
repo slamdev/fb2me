@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="600.0" useSystemMenuBar="false">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TableView disable="false" focusTraversable="true" layoutX="0.0" layoutY="24.0" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="true" visible="true">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Cover" />
+                <TableColumn prefWidth="75.0" text="Author" />
+                <TableColumn prefWidth="75.0" text="Title" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
