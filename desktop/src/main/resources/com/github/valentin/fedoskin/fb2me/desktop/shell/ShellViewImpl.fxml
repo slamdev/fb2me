@@ -11,14 +11,14 @@
             <menus>
                 <Menu text="File">
                     <items>
-                        <MenuItem onAction="#openShelf" text="Shelf" />
-                        <MenuItem onAction="#openReader" text="Reader" />
+                        <MenuItem onAction="#openShelf" text="%shelf" />
+                        <MenuItem onAction="#openReader" text="%reader" />
                         <MenuItem text="Close" />
                     </items>
                 </Menu>
                 <Menu text="Tools">
                     <items>
-                        <MenuItem onAction="#openOptions" text="Options" />
+                        <MenuItem onAction="#openOptions" text="%options" />
                     </items>
                 </Menu>
                 <Menu text="Help">

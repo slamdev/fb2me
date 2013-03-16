@@ -18,7 +18,7 @@ import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellViewImpl;
 public class ApplicationContext {
 
     private static <T> T loadController(Class<T> type) {
-        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type));
+        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type), ResourceUtil.getLocalizationBundle(type));
         try {
             loader.load();
         } catch (IOException e) {
