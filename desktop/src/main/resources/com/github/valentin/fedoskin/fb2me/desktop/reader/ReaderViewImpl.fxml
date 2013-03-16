@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<AnchorPane fx:id="content" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderViewImpl" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <Label fx:id="label" />
+    </children>
+</AnchorPane>

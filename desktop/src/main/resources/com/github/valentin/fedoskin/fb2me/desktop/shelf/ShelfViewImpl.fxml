@@ -5,15 +5,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml">
-  <children>
-    <TableView disable="false" focusTraversable="true" layoutX="0.0" layoutY="24.0" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="true" visible="true">
-      <columns>
-        <TableColumn prefWidth="75.0" text="Cover" />
-        <TableColumn prefWidth="75.0" text="Author" />
-        <TableColumn prefWidth="75.0" text="Title" />
-      </columns>
-    </TableView>
-  </children>
+<AnchorPane fx:id="content" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfViewImpl" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <TableView>
+            <columns>
+                <TableColumn prefWidth="75.0" text="Cover" />
+                <TableColumn prefWidth="75.0" text="Author" />
+                <TableColumn prefWidth="75.0" text="Title" />
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>

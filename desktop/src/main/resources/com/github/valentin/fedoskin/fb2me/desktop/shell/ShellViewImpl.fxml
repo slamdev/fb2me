@@ -5,13 +5,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="contentPane" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shell.ShellViewImpl" xmlns:fx="http://javafx.com/fxml">
     <top>
         <MenuBar>
             <menus>
                 <Menu text="File">
                     <items>
+                        <MenuItem onAction="#openShelf" text="Shelf" />
+                        <MenuItem onAction="#openReader" text="Reader" />
                         <MenuItem text="Close" />
                     </items>
                 </Menu>

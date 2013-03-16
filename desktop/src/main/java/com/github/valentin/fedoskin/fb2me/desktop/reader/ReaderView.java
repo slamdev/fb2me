@@ -1,10 +1,12 @@
-package com.github.valentin.fedoskin.fb2me.desktop.shelf;
+package com.github.valentin.fedoskin.fb2me.desktop.reader;
 
 import javafx.scene.Node;
 
-public interface ShelfView {
+public interface ReaderView {
 
     interface Presenter {
+
+        String getText();
     }
 
     Node getContent();

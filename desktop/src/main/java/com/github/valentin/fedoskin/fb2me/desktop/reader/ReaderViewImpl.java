@@ -1,15 +1,18 @@
-package com.github.valentin.fedoskin.fb2me.desktop.shelf;
+package com.github.valentin.fedoskin.fb2me.desktop.reader;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class ShelfViewImpl implements ShelfView {
+public class ReaderViewImpl implements ReaderView {
 
     @FXML
     private AnchorPane content;
 
-    @SuppressWarnings("unused")
+    @FXML
+    private Label label;
+
     private Presenter presenter;
 
     @Override
@@ -19,6 +22,7 @@ public class ShelfViewImpl implements ShelfView {
 
     @Override
     public void refresh() {
+        label.textProperty().set(presenter.getText());
     }
 
     @Override
