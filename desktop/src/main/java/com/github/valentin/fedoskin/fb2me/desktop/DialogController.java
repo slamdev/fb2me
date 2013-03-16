@@ -20,14 +20,17 @@ public class DialogController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(context.stage);
         Parent parent;
+        String title;
         if (presenter instanceof OptionsPresenter) {
             parent = context.optionsView.getParent();
             context.optionsView.setPresenter((OptionsPresenter) presenter);
             context.optionsView.refresh();
+            title = context.optionsView.getTitle();
         } else {
             throw new RuntimeException();
         }
         stage.setScene(new Scene(parent));
+        stage.setTitle(title);
         stage.showAndWait();
     }
 }

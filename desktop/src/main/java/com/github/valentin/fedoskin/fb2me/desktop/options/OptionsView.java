@@ -9,6 +9,8 @@ public interface OptionsView {
 
     AnchorPane getParent();
 
+    String getTitle();
+
     void refresh();
 
     void setPresenter(Presenter presenter);

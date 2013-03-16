@@ -17,6 +17,11 @@ public class OptionsViewImpl implements OptionsView {
     }
 
     @Override
+    public String getTitle() {
+        return "Options";
+    }
+
+    @Override
     public void refresh() {
     }
 
