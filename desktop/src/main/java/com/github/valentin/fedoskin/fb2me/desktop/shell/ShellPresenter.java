@@ -14,6 +14,11 @@ public class ShellPresenter implements ShellView.Presenter {
     }
 
     @Override
+    public void close() {
+        context.stage.close();
+    }
+
+    @Override
     public void goToReader() {
         context.navigationController.goTo(new ReaderPresenter());
     }

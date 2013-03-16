@@ -7,6 +7,8 @@ public interface ShellView {
 
     interface Presenter {
 
+        void close();
+
         void goToReader();
 
         void goToShelf();

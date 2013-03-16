@@ -13,7 +13,7 @@
                     <items>
                         <MenuItem onAction="#openShelf" text="%shelf" />
                         <MenuItem onAction="#openReader" text="%reader" />
-                        <MenuItem text="Close" />
+                        <MenuItem onAction="#close" text="Close" />
                     </items>
                 </Menu>
                 <Menu text="Tools">
