@@ -16,9 +16,9 @@
                         <MenuItem text="Close" />
                     </items>
                 </Menu>
-                <Menu text="Edit">
+                <Menu text="Tools">
                     <items>
-                        <MenuItem text="Delete" />
+                        <MenuItem onAction="#openOptions" text="Options" />
                     </items>
                 </Menu>
                 <Menu text="Help">

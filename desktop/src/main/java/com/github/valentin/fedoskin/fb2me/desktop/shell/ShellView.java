@@ -10,6 +10,8 @@ public interface ShellView {
         void goToReader();
 
         void goToShelf();
+
+        void showOptions();
     }
 
     Parent getParent();

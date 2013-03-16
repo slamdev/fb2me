@@ -28,6 +28,11 @@ public class ShellViewImpl implements ShellView {
     }
 
     @FXML
+    private void openOptions() {
+        presenter.showOptions();
+    }
+
+    @FXML
     private void openReader() {
         presenter.goToReader();
     }

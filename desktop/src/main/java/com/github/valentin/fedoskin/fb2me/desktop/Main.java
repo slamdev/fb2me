@@ -23,7 +23,7 @@ public class Main extends Application {
         primaryStage.setY(bounds.getHeight() / 4);
         primaryStage.setWidth(bounds.getWidth() / 2);
         primaryStage.setHeight(bounds.getHeight() / 2);
-        ApplicationContext context = new ApplicationContext();
+        ApplicationContext context = new ApplicationContext(primaryStage);
         context.navigationController.goTo(new ReaderPresenter());
         Scene scene = new Scene(context.shellView.getParent());
         primaryStage.setScene(scene);
