@@ -2,24 +2,48 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.layout.VBox?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.options.OptionsViewImpl">
     <children>
-        <TabPane layoutX="0.0" layoutY="0.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Untitled Tab 1">
-                    <content>
-                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-                <Tab text="Untitled Tab 2">
-                    <content>
-                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TabPane tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="General">
+                            <content>
+                                <AnchorPane>
+                                    <children>
+                                        <VBox>
+                                            <children>
+                                                <HBox>
+                                                    <children>
+                                                        <Label text="Language" />
+                                                        <ComboBox fx:id="languages" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+                <HBox>
+                    <children>
+                        <Button onAction="#restoreDefaults" text="Restore defaults" />
+                        <Button onAction="#save" text="OK" />
+                        <Button onAction="#cancel" text="Cancel" />
+                        <Button onAction="#apply" text="Apply" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

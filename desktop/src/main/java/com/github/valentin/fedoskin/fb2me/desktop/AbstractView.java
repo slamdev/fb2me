@@ -5,12 +5,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 public abstract class AbstractView<T, V> implements View<T, V> {
 
     private final FXMLLoader loader;
 
     private T presenter;
+
+    private Stage stage;
 
     public AbstractView(FXMLLoader loader) {
         this.loader = loader;
@@ -20,12 +23,14 @@ public abstract class AbstractView<T, V> implements View<T, V> {
     @Override
     public void afterReload(ApplicationContext context, Map<String, Object> viewData) {
         presenter = (T) viewData.get("P");
+        stage = (Stage) viewData.get("ST");
     }
 
     @Override
     public Map<String, Object> beforeReload(ApplicationContext context) {
         Map<String, Object> viewData = new HashMap<>();
         viewData.put("P", presenter);
+        viewData.put("ST", stage);
         return viewData;
     }
 
@@ -42,6 +47,11 @@ public abstract class AbstractView<T, V> implements View<T, V> {
     @Override
     public V getRoot() {
         return loader.getRoot();
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 
     @Override
@@ -63,5 +73,10 @@ public abstract class AbstractView<T, V> implements View<T, V> {
     @Override
     public void setPresenter(T presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

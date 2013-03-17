@@ -40,11 +40,6 @@ public class ShellViewImpl extends AbstractView<ShellView.Presenter, BorderPane>
         return viewData;
     }
 
-    @Override
-    public void setContent(Node content) {
-        getRoot().setCenter(content);
-    }
-
     @FXML
     private void close() {
         getPresenter().close();
@@ -63,5 +58,10 @@ public class ShellViewImpl extends AbstractView<ShellView.Presenter, BorderPane>
     @FXML
     private void openShelf() {
         getPresenter().goToShelf();
+    }
+
+    @Override
+    public void setContent(Node content) {
+        getRoot().setCenter(content);
     }
 }

@@ -8,5 +8,7 @@ import com.github.valentin.fedoskin.fb2me.desktop.options.OptionsView.Presenter;
 public interface OptionsView extends View<Presenter, AnchorPane> {
 
     interface Presenter {
+
+        void reloadViews();
     }
 }

@@ -30,6 +30,6 @@ public class ShellPresenter implements ShellView.Presenter {
 
     @Override
     public void showOptions() {
-        context.dialogController.show(new OptionsPresenter());
+        context.dialogController.show(new OptionsPresenter(context));
     }
 }
