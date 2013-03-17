@@ -1,32 +1,18 @@
 package com.github.valentin.fedoskin.fb2me.desktop.options;
 
-import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
-public class OptionsViewImpl implements OptionsView {
+import com.github.valentin.fedoskin.fb2me.desktop.AbstractView;
 
-    @FXML
-    private AnchorPane content;
+public class OptionsViewImpl extends AbstractView<OptionsView.Presenter, AnchorPane> implements OptionsView {
 
-    @SuppressWarnings("unused")
-    private Presenter presenter;
-
-    @Override
-    public AnchorPane getParent() {
-        return content;
+    public OptionsViewImpl(FXMLLoader loader) {
+        super(loader);
     }
 
     @Override
     public String getTitle() {
-        return "Options";
-    }
-
-    @Override
-    public void refresh() {
-    }
-
-    @Override
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
+        return getResources().getString("title");
     }
 }

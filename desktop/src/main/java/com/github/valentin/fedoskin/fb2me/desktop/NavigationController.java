@@ -1,9 +1,26 @@
 package com.github.valentin.fedoskin.fb2me.desktop;
 
-import com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderPresenter;
-import com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfPresenter;
+import javafx.scene.Node;
+
+import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
 
 public class NavigationController {
+
+    @SuppressWarnings("unchecked")
+    private static Class<? extends View<?, ?>> getViewClass(Object presenter) {
+        Class<?>[] interfaces = presenter.getClass().getInterfaces();
+        if (interfaces.length == 0) {
+            throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
+        }
+        for (Class<?> t : interfaces) {
+            if (t.getDeclaringClass() != null) {
+                if (View.class.isAssignableFrom(t.getDeclaringClass())) {
+                    return (Class<? extends View<?, ?>>) t.getDeclaringClass();
+                }
+            }
+        }
+        throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
+    }
 
     private final ApplicationContext context;
 
@@ -11,17 +28,11 @@ public class NavigationController {
         this.context = context;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void goTo(Object presenter) {
-        if (presenter instanceof ShelfPresenter) {
-            context.shelfView.setPresenter((ShelfPresenter) presenter);
-            context.shellView.setContent(context.shelfView.getContent());
-            context.shelfView.refresh();
-        } else if (presenter instanceof ReaderPresenter) {
-            context.readerView.setPresenter((ReaderPresenter) presenter);
-            context.shellView.setContent(context.readerView.getContent());
-            context.readerView.refresh();
-        } else {
-            throw new RuntimeException(presenter.toString());
-        }
+        View newView = context.getView(getViewClass(presenter));
+        newView.setPresenter(presenter);
+        context.getView(ShellView.class).setContent((Node) newView.getRoot());
+        newView.refresh();
     }
 }

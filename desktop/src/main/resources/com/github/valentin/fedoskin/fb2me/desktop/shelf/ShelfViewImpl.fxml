@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<AnchorPane fx:id="content" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfViewImpl" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfViewImpl" xmlns:fx="http://javafx.com/fxml">
     <children>
         <TableView>
             <columns>

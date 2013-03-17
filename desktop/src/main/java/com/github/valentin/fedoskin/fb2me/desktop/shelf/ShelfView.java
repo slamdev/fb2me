@@ -1,15 +1,11 @@
 package com.github.valentin.fedoskin.fb2me.desktop.shelf;
 
-import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 
-public interface ShelfView {
+import com.github.valentin.fedoskin.fb2me.desktop.View;
+
+public interface ShelfView extends View<ShelfView.Presenter, AnchorPane> {
 
     interface Presenter {
     }
-
-    Node getContent();
-
-    void refresh();
-
-    void setPresenter(Presenter presenter);
 }

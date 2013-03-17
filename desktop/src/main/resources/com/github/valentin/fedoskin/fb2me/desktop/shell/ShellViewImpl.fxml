@@ -5,7 +5,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<BorderPane fx:id="contentPane" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shell.ShellViewImpl" xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shell.ShellViewImpl">
+    <center>
+        <Pane />
+    </center>
     <top>
         <MenuBar>
             <menus>
@@ -29,9 +32,6 @@
             </menus>
         </MenuBar>
     </top>
-    <center>
-        <Pane />
-    </center>
     <bottom>
         <HBox prefHeight="100.0" prefWidth="200.0" />
     </bottom>

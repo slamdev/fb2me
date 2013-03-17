@@ -1,32 +1,39 @@
 package com.github.valentin.fedoskin.fb2me.desktop.reader;
 
+import java.util.Map;
+
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class ReaderViewImpl implements ReaderView {
+import com.github.valentin.fedoskin.fb2me.desktop.AbstractView;
+import com.github.valentin.fedoskin.fb2me.desktop.ApplicationContext;
 
-    @FXML
-    private AnchorPane content;
+public class ReaderViewImpl extends AbstractView<ReaderView.Presenter, AnchorPane> implements ReaderView {
 
     @FXML
     private Label label;
 
-    private Presenter presenter;
+    public ReaderViewImpl(FXMLLoader loader) {
+        super(loader);
+    }
 
     @Override
-    public Node getContent() {
-        return content;
+    public void afterReload(ApplicationContext context, Map<String, Object> viewData) {
+        super.afterReload(context, viewData);
+        label.setText((String) viewData.get("L"));
+    }
+
+    @Override
+    public Map<String, Object> beforeReload(ApplicationContext context) {
+        Map<String, Object> viewData = super.beforeReload(context);
+        viewData.put("L", label.getText());
+        return viewData;
     }
 
     @Override
     public void refresh() {
-        label.textProperty().set(presenter.getText());
-    }
-
-    @Override
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
+        label.textProperty().set(getPresenter().getText());
     }
 }

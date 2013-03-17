@@ -2,16 +2,17 @@ package com.github.valentin.fedoskin.fb2me.desktop.options;
 
 import javafx.scene.layout.AnchorPane;
 
-public interface OptionsView {
+import com.github.valentin.fedoskin.fb2me.desktop.View;
+import com.github.valentin.fedoskin.fb2me.desktop.options.OptionsView.Presenter;
+
+public interface OptionsView extends View<Presenter, AnchorPane> {
 
     interface Presenter {
     }
 
-    AnchorPane getParent();
-
+    @Override
     String getTitle();
 
+    @Override
     void refresh();
-
-    void setPresenter(Presenter presenter);
 }

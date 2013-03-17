@@ -1,17 +1,16 @@
 package com.github.valentin.fedoskin.fb2me.desktop.reader;
 
-import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 
-public interface ReaderView {
+import com.github.valentin.fedoskin.fb2me.desktop.View;
+
+public interface ReaderView extends View<ReaderView.Presenter, AnchorPane> {
 
     interface Presenter {
 
         String getText();
     }
 
-    Node getContent();
-
+    @Override
     void refresh();
-
-    void setPresenter(Presenter presenter);
 }

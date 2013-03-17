@@ -7,6 +7,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderPresenter;
+import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
 
 public class Main extends Application {
 
@@ -25,7 +26,7 @@ public class Main extends Application {
         primaryStage.setHeight(bounds.getHeight() / 2);
         ApplicationContext context = new ApplicationContext(primaryStage);
         context.navigationController.goTo(new ReaderPresenter());
-        Scene scene = new Scene(context.shellView.getParent());
+        Scene scene = new Scene(context.getView(ShellView.class).getRoot());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -1,9 +1,11 @@
 package com.github.valentin.fedoskin.fb2me.desktop.shell;
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 
-public interface ShellView {
+import com.github.valentin.fedoskin.fb2me.desktop.View;
+
+public interface ShellView extends View<ShellView.Presenter, BorderPane> {
 
     interface Presenter {
 
@@ -16,9 +18,5 @@ public interface ShellView {
         void showOptions();
     }
 
-    Parent getParent();
-
     void setContent(Node content);
-
-    void setPresenter(Presenter shellPresenter);
 }
