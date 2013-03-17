@@ -9,10 +9,4 @@ public interface OptionsView extends View<Presenter, AnchorPane> {
 
     interface Presenter {
     }
-
-    @Override
-    String getTitle();
-
-    @Override
-    void refresh();
 }

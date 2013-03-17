@@ -10,7 +10,4 @@ public interface ReaderView extends View<ReaderView.Presenter, AnchorPane> {
 
         String getText();
     }
-
-    @Override
-    void refresh();
 }
