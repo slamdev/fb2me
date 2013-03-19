@@ -28,6 +28,7 @@ public class ApplicationContext {
     public ApplicationContext(Stage stage) {
         this.stage = stage;
         optionsController = new OptionsController(this);
+        ResourceUtil.setLocale(optionsController.getLanguage());
         viewController = new ViewController(this);
         dialogController = new DialogController(this);
         navigationController = new NavigationController(this);

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Options {
 
-    public static class StageSize {
+    public static class StageSize implements Comparable<StageSize> {
 
         public final double h;
 
@@ -31,6 +31,15 @@ public class Options {
             this.h = h;
             this.x = x;
             this.y = y;
+        }
+
+        @Override
+        public int compareTo(StageSize o) {
+            int dH = Double.compare(h, o.h);
+            int dW = Double.compare(w, o.w);
+            int dX = Double.compare(x, o.x);
+            int dY = Double.compare(y, o.y);
+            return dH + dW + dX + dY;
         }
 
         @Override
@@ -69,7 +78,7 @@ public class Options {
         }
     }
 
-    private String language;
+    private String language = "";
 
     private Set<StageSize> stageSizes = new HashSet<>();
 

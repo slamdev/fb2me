@@ -3,27 +3,21 @@ package com.github.valentin.fedoskin.fb2me.desktop;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ResourceUtil {
 
-    public static final Locale[] LOCALES = { Locale.forLanguageTag("en"), Locale.forLanguageTag("ru") };
-
     private static final String DEFAULT_CONFIG_RESOURCE = Main.class.getPackage().getName() + ".fb2me";
 
     private static Locale locale = Locale.getDefault();
+
+    public static final Locale[] LOCALES = { Locale.forLanguageTag("en"), Locale.forLanguageTag("ru") };
 
     /**
      * match ${ENV_VAR_NAME} or $ENV_VAR_NAME
      */
     private static final Pattern SYSTEM_VARIABLE_PATTERN = Pattern.compile("\\$\\{(\\S+)\\}");
-    static {
-        Preferences p = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
-        String l = p.get("language", Locale.getDefault().getLanguage());
-        locale = Locale.forLanguageTag(l);
-    }
 
     public static ResourceBundle getConfig(String name) {
         URL userConfig = ResourceUtil.class.getResource("/" + name + ".properties");
@@ -58,10 +52,6 @@ public final class ResourceUtil {
         return ResourceBundle.getBundle(type.getName(), locale);
     }
 
-    public static void setLocale(Locale l) {
-        locale = l;
-    }
-
     /**
      * Returns input string with system variables references expanded, e.g. ${SOME_VAR}
      */
@@ -79,6 +69,10 @@ public final class ResourceUtil {
             }
         }
         return value;
+    }
+
+    public static void setLocale(Locale l) {
+        locale = l;
     }
 
     private ResourceUtil() {

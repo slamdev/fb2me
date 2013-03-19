@@ -1,7 +1,6 @@
 package com.github.valentin.fedoskin.fb2me.desktop.options;
 
 import java.util.Locale;
-import java.util.prefs.Preferences;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +21,17 @@ public class OptionsViewImpl extends StageView<OptionsView.Presenter, AnchorPane
 
     public OptionsViewImpl(FXMLLoader loader) {
         super(loader);
+    }
+
+    @FXML
+    private void apply() {
+        getPresenter().changeLanguageOption(languages.getValue());
+        getPresenter().reloadViews();
+    }
+
+    @FXML
+    private void cancel() {
+        getStage().close();
     }
 
     @Override
@@ -55,28 +65,12 @@ public class OptionsViewImpl extends StageView<OptionsView.Presenter, AnchorPane
     }
 
     @FXML
-    private void apply() {
-        Preferences p = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
-        p.put("language", languages.getValue().getLanguage());
-        ResourceUtil.setLocale(languages.getValue());
-        getPresenter().reloadViews();
-    }
-
-    @FXML
-    private void cancel() {
-        getStage().close();
-    }
-
-    @FXML
     private void restoreDefaults() {
     }
 
     @FXML
     private void save() {
-        Preferences p = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
-        p.put("language", languages.getValue().getLanguage());
-        ResourceUtil.setLocale(languages.getValue());
-        getPresenter().reloadViews();
+        apply();
         getStage().close();
     }
 }

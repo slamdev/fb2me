@@ -1,6 +1,7 @@
 package com.github.valentin.fedoskin.fb2me.desktop;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.Preferences;
 
@@ -45,8 +46,11 @@ public class OptionsController {
         options = unserializeOptions();
     }
 
-    public Options getOptions() {
-        return options;
+    public Locale getLanguage() {
+        if (options.getLanguage().isEmpty()) {
+            return Locale.getDefault();
+        }
+        return Locale.forLanguageTag(options.getLanguage());
     }
 
     public double getStageH(View<?, ?> view) {
@@ -54,6 +58,16 @@ public class OptionsController {
         double max = bounds.getHeight();
         StageSize stageSize = getStageSizeForView(view);
         return stageSize.h * max;
+    }
+
+    private StageSize getStageSizeForView(View<?, ?> view) {
+        Set<StageSize> sizes = options.getStageSizes();
+        for (StageSize s : sizes) {
+            if (s.type.equals(view.getClass())) {
+                return s;
+            }
+        }
+        return new StageSize(view.getClass());
     }
 
     public double getStageW(View<?, ?> view) {
@@ -77,7 +91,26 @@ public class OptionsController {
         return stageSize.y * max;
     }
 
-    public void updateStageSize(View<?, ?> view) {
+    private void serializeOptions() {
+        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
+        try {
+            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
+            System.out.println(MAPPER.writeValueAsString(options));
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void setLanguage(Locale value) {
+        boolean changed = !options.getLanguage().equals(value.getLanguage());
+        if (changed) {
+            options.setLanguage(value.getLanguage());
+            ResourceUtil.setLocale(value);
+            serializeOptions();
+        }
+    }
+
+    public void setStageSize(View<?, ?> view) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         double maxH = bounds.getHeight();
@@ -88,30 +121,16 @@ public class OptionsController {
         double y = view.getStage().getY() / maxH;
         Class<?> type = view.getClass();
         StageSize stageSize = new StageSize(type, w, h, x, y);
+        boolean changed;
         if (options.getStageSizes().contains(stageSize)) {
+            changed = getStageSizeForView(view).compareTo(stageSize) != 0;
             options.getStageSizes().remove(stageSize);
+        } else {
+            changed = true;
         }
-        options.getStageSizes().add(stageSize);
-        serializeOptions();
-    }
-
-    private StageSize getStageSizeForView(View<?, ?> view) {
-        Set<StageSize> sizes = options.getStageSizes();
-        for (StageSize s : sizes) {
-            if (s.type.equals(view.getClass())) {
-                return s;
-            }
-        }
-        return new StageSize(view.getClass());
-    }
-
-    private void serializeOptions() {
-        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
-        try {
-            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
-            System.out.println(MAPPER.writeValueAsString(options));
-        } catch (IOException e) {
-            throw new RuntimeException();
+        if (changed) {
+            options.getStageSizes().add(stageSize);
+            serializeOptions();
         }
     }
 }
