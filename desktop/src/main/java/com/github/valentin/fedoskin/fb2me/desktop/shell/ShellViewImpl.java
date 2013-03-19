@@ -5,15 +5,13 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
-import com.github.valentin.fedoskin.fb2me.desktop.AbstractView;
 import com.github.valentin.fedoskin.fb2me.desktop.ApplicationContext;
+import com.github.valentin.fedoskin.fb2me.desktop.StageView;
 import com.github.valentin.fedoskin.fb2me.desktop.View;
 
-public class ShellViewImpl extends AbstractView<ShellView.Presenter, BorderPane> implements ShellView {
+public class ShellViewImpl extends StageView<ShellView.Presenter, BorderPane> implements ShellView {
 
     public ShellViewImpl(FXMLLoader loader) {
         super(loader);
@@ -23,21 +21,21 @@ public class ShellViewImpl extends AbstractView<ShellView.Presenter, BorderPane>
     @Override
     public void afterReload(ApplicationContext context, Map<String, Object> viewData) {
         super.afterReload(context, viewData);
-        ((Scene) viewData.get("S")).setRoot(getRoot());
-        View<?, ?> view = context.getView((Class<View<?, ?>>) viewData.get("V"));
-        setContent((Node) view.getRoot());
+        View<?, ?> view = context.getView((Class<View<?, ?>>) viewData.get("CONTENT"));
+        setContent(view.getRoot());
     }
 
     @Override
     public Map<String, Object> beforeReload(ApplicationContext context) {
         Map<String, Object> viewData = super.beforeReload(context);
-        Scene scene = getRoot().getScene();
-        // TODO: need to find a proper way to deattach node from the old scene
-        scene.setRoot(new Label());
-        viewData.put("S", scene);
         Node node = getRoot().getCenter();
-        viewData.put("V", context.viewController.getView(node).getClass());
+        viewData.put("CONTENT", context.viewController.getView(node).getClass());
         return viewData;
+    }
+
+    @Override
+    public void setContent(Node content) {
+        getRoot().setCenter(content);
     }
 
     @FXML
@@ -58,10 +56,5 @@ public class ShellViewImpl extends AbstractView<ShellView.Presenter, BorderPane>
     @FXML
     private void openShelf() {
         getPresenter().goToShelf();
-    }
-
-    @Override
-    public void setContent(Node content) {
-        getRoot().setCenter(content);
     }
 }

@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public abstract class AbstractView<T, V> implements View<T, V> {
+public abstract class AbstractView<T, V extends Pane> implements View<T, V> {
 
     private final FXMLLoader loader;
 
@@ -22,15 +23,15 @@ public abstract class AbstractView<T, V> implements View<T, V> {
     @SuppressWarnings("unchecked")
     @Override
     public void afterReload(ApplicationContext context, Map<String, Object> viewData) {
-        presenter = (T) viewData.get("P");
-        stage = (Stage) viewData.get("ST");
+        presenter = (T) viewData.get("PRESENTER");
+        stage = (Stage) viewData.get("STAGE");
     }
 
     @Override
     public Map<String, Object> beforeReload(ApplicationContext context) {
         Map<String, Object> viewData = new HashMap<>();
-        viewData.put("P", presenter);
-        viewData.put("ST", stage);
+        viewData.put("PRESENTER", presenter);
+        viewData.put("STAGE", stage);
         return viewData;
     }
 
@@ -60,10 +61,6 @@ public abstract class AbstractView<T, V> implements View<T, V> {
             return getResources().getString("title");
         }
         return "";
-    }
-
-    public FXMLLoader loader() {
-        return loader;
     }
 
     @Override

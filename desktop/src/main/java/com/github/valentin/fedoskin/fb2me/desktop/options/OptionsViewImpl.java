@@ -12,30 +12,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 
-import com.github.valentin.fedoskin.fb2me.desktop.AbstractView;
 import com.github.valentin.fedoskin.fb2me.desktop.ResourceUtil;
+import com.github.valentin.fedoskin.fb2me.desktop.StageView;
 
-public class OptionsViewImpl extends AbstractView<OptionsView.Presenter, AnchorPane> implements OptionsView {
+public class OptionsViewImpl extends StageView<OptionsView.Presenter, AnchorPane> implements OptionsView {
 
     @FXML
     private ComboBox<Locale> languages;
 
     public OptionsViewImpl(FXMLLoader loader) {
         super(loader);
-    }
-
-    @FXML
-    private void apply() {
-    }
-
-    @FXML
-    private void cancel() {
-        getStage().close();
-    }
-
-    @Override
-    public String getTitle() {
-        return getResources().getString("title");
     }
 
     @Override
@@ -66,6 +52,19 @@ public class OptionsViewImpl extends AbstractView<OptionsView.Presenter, AnchorP
             }
         });
         languages.getSelectionModel().select(ResourceUtil.getLocale());
+    }
+
+    @FXML
+    private void apply() {
+        Preferences p = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
+        p.put("language", languages.getValue().getLanguage());
+        ResourceUtil.setLocale(languages.getValue());
+        getPresenter().reloadViews();
+    }
+
+    @FXML
+    private void cancel() {
+        getStage().close();
     }
 
     @FXML

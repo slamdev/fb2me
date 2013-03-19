@@ -1,7 +1,5 @@
 package com.github.valentin.fedoskin.fb2me.desktop;
 
-import javafx.scene.Node;
-
 import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
 
 public class NavigationController {
@@ -32,7 +30,7 @@ public class NavigationController {
     public void goTo(Object presenter) {
         View newView = context.getView(getViewClass(presenter));
         newView.setPresenter(presenter);
-        context.getView(ShellView.class).setContent((Node) newView.getRoot());
+        context.getView(ShellView.class).setContent(newView.getRoot());
         newView.refresh();
     }
 }

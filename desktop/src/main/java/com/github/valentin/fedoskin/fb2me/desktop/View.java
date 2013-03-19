@@ -3,9 +3,10 @@ package com.github.valentin.fedoskin.fb2me.desktop;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public interface View<T, V> {
+public interface View<T, V extends Pane> {
 
     void afterReload(ApplicationContext context, Map<String, Object> viewData);
 

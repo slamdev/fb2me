@@ -7,9 +7,9 @@ import java.util.prefs.Preferences;
 
 public final class ResourceUtil {
 
-    private static Locale locale = Locale.getDefault();
-
     public static final Locale[] LOCALES = { Locale.forLanguageTag("en"), Locale.forLanguageTag("ru") };
+
+    private static Locale locale = Locale.getDefault();
     static {
         Preferences p = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
         String l = p.get("language", Locale.getDefault().getLanguage());

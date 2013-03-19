@@ -13,18 +13,21 @@ import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
 
 public class ApplicationContext {
 
-    public final DialogController dialogController = new DialogController(this);
+    public final DialogController dialogController;
 
-    public final NavigationController navigationController = new NavigationController(this);
+    public final NavigationController navigationController;
 
     public final Preferences preferences = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
 
     public final Stage stage;
 
-    public final ViewController viewController = new ViewController(this);
+    public final ViewController viewController;
 
     public ApplicationContext(Stage stage) {
         this.stage = stage;
+        viewController = new ViewController(this);
+        dialogController = new DialogController(this);
+        navigationController = new NavigationController(this);
         viewController.getView(ShellView.class).setPresenter(new ShellPresenter(this));
         preferences.addPreferenceChangeListener(new PreferenceChangeListener() {
 

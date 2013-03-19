@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.VBox?>
-
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.options.OptionsViewImpl">
     <children>
         <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -23,7 +22,7 @@
                                             <children>
                                                 <HBox>
                                                     <children>
-                                                        <Label text="Language" />
+                                                        <Label text="%language" />
                                                         <ComboBox fx:id="languages" />
                                                     </children>
                                                 </HBox>

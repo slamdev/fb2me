@@ -38,7 +38,7 @@ public class DialogController {
         View view = context.getView(getViewClass(presenter));
         view.setPresenter(presenter);
         view.setStage(stage);
-        Parent parent = (Parent) view.getRoot();
+        Parent parent = view.getRoot();
         if (parent.getScene() != null) {
             // TODO: need to find a proper way to deattach node from the old scene
             parent.getScene().setRoot(new Label());
