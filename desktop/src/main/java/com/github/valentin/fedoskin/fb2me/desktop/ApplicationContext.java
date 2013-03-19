@@ -17,6 +17,8 @@ public class ApplicationContext {
 
     public final NavigationController navigationController;
 
+    public final OptionsController optionsController;
+
     public final Preferences preferences = Preferences.userRoot().node("com.github.valentin.fedoskin.fb2me");
 
     public final Stage stage;
@@ -25,6 +27,7 @@ public class ApplicationContext {
 
     public ApplicationContext(Stage stage) {
         this.stage = stage;
+        optionsController = new OptionsController(this);
         viewController = new ViewController(this);
         dialogController = new DialogController(this);
         navigationController = new NavigationController(this);

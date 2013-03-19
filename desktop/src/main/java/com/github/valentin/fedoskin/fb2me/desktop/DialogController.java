@@ -1,5 +1,7 @@
 package com.github.valentin.fedoskin.fb2me.desktop;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -35,7 +37,7 @@ public class DialogController {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(context.stage);
-        View view = context.getView(getViewClass(presenter));
+        final View view = context.getView(getViewClass(presenter));
         view.setPresenter(presenter);
         view.setStage(stage);
         Parent parent = view.getRoot();
@@ -43,9 +45,38 @@ public class DialogController {
             // TODO: need to find a proper way to deattach node from the old scene
             parent.getScene().setRoot(new Label());
         }
+        // set bounds
+        double h = context.optionsController.getStageH(view);
+        double w = context.optionsController.getStageW(view);
+        double x = context.optionsController.getStageX(view);
+        double y = context.optionsController.getStageY(view);
+        if (h != 0) {
+            stage.setHeight(h);
+        }
+        if (w != 0) {
+            stage.setWidth(w);
+        }
+        if (x != 0) {
+            stage.setX(x);
+        }
+        if (y != 0) {
+            stage.setY(y);
+        }
+        // /
         stage.setScene(new Scene(parent));
         stage.setTitle(view.getTitle());
         view.refresh();
+        ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+                context.optionsController.updateStageSize(view);
+            }
+        };
+        stage.widthProperty().addListener(changeListener);
+        stage.heightProperty().addListener(changeListener);
+        stage.xProperty().addListener(changeListener);
+        stage.yProperty().addListener(changeListener);
         stage.showAndWait();
     }
 }

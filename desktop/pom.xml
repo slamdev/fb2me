@@ -26,5 +26,10 @@
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
     </dependencies>
 </project>
