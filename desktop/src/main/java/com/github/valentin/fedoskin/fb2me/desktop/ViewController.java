@@ -66,20 +66,6 @@ public class ViewController {
         load(Arrays.asList(CLASSES));
     }
 
-    private <T extends View<?, ?>> T createView(Class<T> type) {
-        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type), ResourceUtil.getLocalizationBundle(type));
-        loader.setControllerFactory(new ControllerFactory(loader));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        T view = loader.getController();
-        view.setStage(context.stage);
-        views.add(view);
-        return view;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends View<?, ?>> T getView(Class<T> type) {
         if (type.isInterface()) {
@@ -102,13 +88,6 @@ public class ViewController {
         throw new IllegalArgumentException("Unable to find view by the passed root element " + node);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void load(List<Class<?>> classes) {
-        for (Class type : classes) {
-            createView(type);
-        }
-    }
-
     public void reload() {
         Map<Class<?>, Map<String, Object>> viewsData = new HashMap<>();
         List<Class<?>> viewsClasses = new ArrayList<>();
@@ -123,6 +102,27 @@ public class ViewController {
         }
         for (View<?, ?> view : views) {
             view.refresh();
+        }
+    }
+
+    private <T extends View<?, ?>> T createView(Class<T> type) {
+        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type), ResourceUtil.getLocalizationBundle(type));
+        loader.setControllerFactory(new ControllerFactory(loader));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        T view = loader.getController();
+        view.setStage(context.stage);
+        views.add(view);
+        return view;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private void load(List<Class<?>> classes) {
+        for (Class type : classes) {
+            createView(type);
         }
     }
 }

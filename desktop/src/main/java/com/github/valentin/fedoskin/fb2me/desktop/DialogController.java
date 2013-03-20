@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellPresenter;
+
 public class DialogController {
 
     @SuppressWarnings("unchecked")
@@ -32,12 +34,18 @@ public class DialogController {
         this.context = context;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void show(Object presenter) {
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(context.stage);
+        show(new Stage(), presenter, true);
+    }
+
+    public void showShell() {
+        show(context.stage, new ShellPresenter(context), false);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private void show(Stage stage, Object presenter, boolean modal) {
         final View view = context.getView(getViewClass(presenter));
+        stage.setTitle(view.getTitle());
         view.setPresenter(presenter);
         view.setStage(stage);
         Parent parent = view.getRoot();
@@ -64,7 +72,6 @@ public class DialogController {
         }
         // /
         stage.setScene(new Scene(parent));
-        stage.setTitle(view.getTitle());
         view.refresh();
         ChangeListener<Number> changeListener = new ChangeListener<Number>() {
 
@@ -77,6 +84,12 @@ public class DialogController {
         stage.heightProperty().addListener(changeListener);
         stage.xProperty().addListener(changeListener);
         stage.yProperty().addListener(changeListener);
-        stage.showAndWait();
+        if (modal) {
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(context.stage);
+            stage.showAndWait();
+        } else {
+            stage.show();
+        }
     }
 }

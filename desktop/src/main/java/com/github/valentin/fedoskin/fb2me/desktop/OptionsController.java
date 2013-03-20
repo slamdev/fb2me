@@ -60,16 +60,6 @@ public class OptionsController {
         return stageSize.h * max;
     }
 
-    private StageSize getStageSizeForView(View<?, ?> view) {
-        Set<StageSize> sizes = options.getStageSizes();
-        for (StageSize s : sizes) {
-            if (s.type.equals(view.getClass())) {
-                return s;
-            }
-        }
-        return new StageSize(view.getClass());
-    }
-
     public double getStageW(View<?, ?> view) {
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
         double max = bounds.getWidth();
@@ -89,16 +79,6 @@ public class OptionsController {
         double max = bounds.getHeight();
         StageSize stageSize = getStageSizeForView(view);
         return stageSize.y * max;
-    }
-
-    private void serializeOptions() {
-        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
-        try {
-            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
-            System.out.println(MAPPER.writeValueAsString(options));
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
     }
 
     public void setLanguage(Locale value) {
@@ -131,6 +111,26 @@ public class OptionsController {
         if (changed) {
             options.getStageSizes().add(stageSize);
             serializeOptions();
+        }
+    }
+
+    private StageSize getStageSizeForView(View<?, ?> view) {
+        Set<StageSize> sizes = options.getStageSizes();
+        for (StageSize s : sizes) {
+            if (s.type.equals(view.getClass())) {
+                return s;
+            }
+        }
+        return new StageSize(view.getClass());
+    }
+
+    private void serializeOptions() {
+        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
+        try {
+            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
+            System.out.println(MAPPER.writeValueAsString(options));
+        } catch (IOException e) {
+            throw new RuntimeException();
         }
     }
 }
