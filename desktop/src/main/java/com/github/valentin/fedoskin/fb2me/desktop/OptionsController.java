@@ -8,9 +8,8 @@ import java.util.prefs.Preferences;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.valentin.fedoskin.fb2me.desktop.Options.StageSize;
 
 public class OptionsController {
@@ -19,8 +18,8 @@ public class OptionsController {
 
     private static final String OPTIONS_NODE = "options";
     static {
-        MAPPER.setSerializationInclusion(Inclusion.NON_EMPTY);
-        MAPPER.setSerializationInclusion(Inclusion.NON_DEFAULT);
+        MAPPER.setSerializationInclusion(Include.NON_EMPTY);
+        MAPPER.setSerializationInclusion(Include.NON_DEFAULT);
     }
 
     private static Options unserializeOptions() {
@@ -32,7 +31,7 @@ public class OptionsController {
         try {
             return MAPPER.readValue(serializedOptions, Options.class);
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
