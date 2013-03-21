@@ -5,7 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<AnchorPane fx:controller="com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderViewImpl" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.web.HTMLEditor?>
+<?import javafx.scene.web.WebView?>
+<AnchorPane stylesheets="com/github/valentin/fedoskin/fb2me/desktop/reader/ReaderViewImpl.css" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderViewImpl" xmlns:fx="http://javafx.com/fxml">
     <children>
         <Label fx:id="label" />
     </children>
