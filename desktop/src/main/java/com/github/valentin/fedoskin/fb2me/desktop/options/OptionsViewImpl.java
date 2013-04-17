@@ -23,6 +23,17 @@ public class OptionsViewImpl extends StageView<OptionsView.Presenter, AnchorPane
         super(loader);
     }
 
+    @FXML
+    private void apply() {
+        getPresenter().changeLanguageOption(languages.getValue());
+        getPresenter().reloadViews();
+    }
+
+    @FXML
+    private void cancel() {
+        getStage().close();
+    }
+
     @Override
     public void refresh() {
         getRoot().getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -50,22 +61,15 @@ public class OptionsViewImpl extends StageView<OptionsView.Presenter, AnchorPane
                 return object.getDisplayLanguage();
             }
         });
-        languages.getSelectionModel().select(ResourceUtil.getLocale());
-    }
-
-    @FXML
-    private void apply() {
-        getPresenter().changeLanguageOption(languages.getValue());
-        getPresenter().reloadViews();
-    }
-
-    @FXML
-    private void cancel() {
-        getStage().close();
+        languages.getSelectionModel().select(getPresenter().getLanguage());
     }
 
     @FXML
     private void restoreDefaults() {
+        getPresenter().resetOptions();
+        getPresenter().changeLanguageOption(getPresenter().getLanguage());
+        getPresenter().reloadViews();
+        getStage().close();
     }
 
     @FXML

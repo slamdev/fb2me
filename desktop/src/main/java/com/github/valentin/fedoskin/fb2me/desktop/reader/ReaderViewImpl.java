@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 
 import com.github.valentin.fedoskin.fb2me.desktop.AbstractView;
 import com.github.valentin.fedoskin.fb2me.desktop.ApplicationContext;
@@ -37,19 +35,19 @@ public class ReaderViewImpl extends AbstractView<ReaderView.Presenter, AnchorPan
     @Override
     public void refresh() {
         label.textProperty().set(getPresenter().getText());
-        WebView w = new WebView();
-        WebEngine e = w.getEngine();
-        StringBuilder sb = new StringBuilder();
-        e.setUserStyleSheetLocation(getClass().getResource("sumatra.css").toExternalForm());
-        // sb.append("<style>.red{color:red;}</style>");
-        for (int i = 0; i < 100; i++) {
-            sb.append("<div class='red'><b>aaa</b></div>");
-            sb.append("<p />");
-            sb.append("<i>aaa</i>");
-            sb.append("<p />");
-        }
-        e.load(getClass().getResource("aaa.fb2.html").toExternalForm());
-        // e.loadContent(sb.toString());
-        getRoot().getChildren().add(w);
+        // WebView w = new WebView();
+        // WebEngine e = w.getEngine();
+        // StringBuilder sb = new StringBuilder();
+        // e.setUserStyleSheetLocation(getClass().getResource("sumatra.css").toExternalForm());
+        // // sb.append("<style>.red{color:red;}</style>");
+        // for (int i = 0; i < 100; i++) {
+        // sb.append("<div class='red'><b>aaa</b></div>");
+        // sb.append("<p />");
+        // sb.append("<i>aaa</i>");
+        // sb.append("<p />");
+        // }
+        // e.load(getClass().getResource("aaa.fb2.html").toExternalForm());
+        // // e.loadContent(sb.toString());
+        // getRoot().getChildren().add(w);
     }
 }

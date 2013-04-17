@@ -15,6 +15,8 @@ public class ApplicationContext {
 
     public final DialogController dialogController;
 
+    public final EventsController eventsController = new EventsController();
+
     public final NavigationController navigationController;
 
     public final OptionsController optionsController;

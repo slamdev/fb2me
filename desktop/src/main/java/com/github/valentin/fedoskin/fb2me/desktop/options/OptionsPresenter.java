@@ -18,7 +18,17 @@ public class OptionsPresenter implements OptionsView.Presenter {
     }
 
     @Override
+    public Locale getLanguage() {
+        return context.optionsController.getLanguage();
+    }
+
+    @Override
     public void reloadViews() {
         context.viewController.reload();
+    }
+
+    @Override
+    public void resetOptions() {
+        context.optionsController.resetOptions();
     }
 }

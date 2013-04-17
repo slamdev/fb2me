@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.util.Callback;
@@ -59,11 +60,42 @@ public class ViewController {
 
     private final ApplicationContext context;
 
+    @SuppressWarnings("rawtypes")
+    private final Set<Class<? extends View>> showingViewTypes = new HashSet<>();
+
     private final Set<View<?, ?>> views = new HashSet<>();
 
     public ViewController(ApplicationContext context) {
         this.context = context;
+        context.eventsController.addEventHandler(ViewEvent.VIEW_SHOWN, new EventHandler<ViewEvent>() {
+
+            @Override
+            public void handle(ViewEvent event) {
+                showingViewTypes.add(event.getView().getClass());
+            }
+        });
+        context.eventsController.addEventHandler(ViewEvent.VIEW_HIDDEN, new EventHandler<ViewEvent>() {
+
+            @Override
+            public void handle(ViewEvent event) {
+                showingViewTypes.remove(event.getView().getClass());
+            }
+        });
         load(Arrays.asList(CLASSES));
+    }
+
+    private <T extends View<?, ?>> T createView(Class<T> type) {
+        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type), ResourceUtil.getLocalizationBundle(type));
+        loader.setControllerFactory(new ControllerFactory(loader));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        T view = loader.getController();
+        view.setStage(context.stage);
+        views.add(view);
+        return view;
     }
 
     @SuppressWarnings("unchecked")
@@ -88,6 +120,14 @@ public class ViewController {
         throw new IllegalArgumentException("Unable to find view by the passed root element " + node);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private void load(List<Class<?>> classes) {
+        for (Class type : classes) {
+            createView(type);
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
     public void reload() {
         Map<Class<?>, Map<String, Object>> viewsData = new HashMap<>();
         List<Class<?>> viewsClasses = new ArrayList<>();
@@ -103,26 +143,8 @@ public class ViewController {
         for (View<?, ?> view : views) {
             view.refresh();
         }
-    }
-
-    private <T extends View<?, ?>> T createView(Class<T> type) {
-        FXMLLoader loader = new FXMLLoader(ResourceUtil.getFxml(type), ResourceUtil.getLocalizationBundle(type));
-        loader.setControllerFactory(new ControllerFactory(loader));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        T view = loader.getController();
-        view.setStage(context.stage);
-        views.add(view);
-        return view;
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void load(List<Class<?>> classes) {
-        for (Class type : classes) {
-            createView(type);
+        for (Class<? extends View> types : showingViewTypes) {
+            getView(types).refresh();
         }
     }
 }
