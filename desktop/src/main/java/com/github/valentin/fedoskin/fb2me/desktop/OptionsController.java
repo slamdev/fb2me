@@ -38,7 +38,7 @@ public class OptionsController {
     @SuppressWarnings("unused")
     private final ApplicationContext context;
 
-    private final Options options;
+    private Options options;
 
     public OptionsController(ApplicationContext context) {
         this.context = context;
@@ -57,6 +57,16 @@ public class OptionsController {
         double max = bounds.getHeight();
         StageSize stageSize = getStageSizeForView(view);
         return stageSize.h * max;
+    }
+
+    private StageSize getStageSizeForView(View<?, ?> view) {
+        Set<StageSize> sizes = options.getStageSizes();
+        for (StageSize s : sizes) {
+            if (s.type.equals(view.getClass())) {
+                return s;
+            }
+        }
+        return new StageSize(view.getClass());
     }
 
     public double getStageW(View<?, ?> view) {
@@ -78,6 +88,20 @@ public class OptionsController {
         double max = bounds.getHeight();
         StageSize stageSize = getStageSizeForView(view);
         return stageSize.y * max;
+    }
+
+    public void resetOptions() {
+        options = new Options();
+        serializeOptions();
+    }
+
+    private void serializeOptions() {
+        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
+        try {
+            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
     public void setLanguage(Locale value) {
@@ -110,25 +134,6 @@ public class OptionsController {
         if (changed) {
             options.getStageSizes().add(stageSize);
             serializeOptions();
-        }
-    }
-
-    private StageSize getStageSizeForView(View<?, ?> view) {
-        Set<StageSize> sizes = options.getStageSizes();
-        for (StageSize s : sizes) {
-            if (s.type.equals(view.getClass())) {
-                return s;
-            }
-        }
-        return new StageSize(view.getClass());
-    }
-
-    private void serializeOptions() {
-        Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
-        try {
-            preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
-        } catch (IOException e) {
-            throw new RuntimeException();
         }
     }
 }

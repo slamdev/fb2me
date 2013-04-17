@@ -33,11 +33,6 @@ public class ShellViewImpl extends StageView<ShellView.Presenter, BorderPane> im
         return viewData;
     }
 
-    @Override
-    public void setContent(Node content) {
-        getRoot().setCenter(content);
-    }
-
     @FXML
     private void close() {
         getPresenter().close();
@@ -56,5 +51,10 @@ public class ShellViewImpl extends StageView<ShellView.Presenter, BorderPane> im
     @FXML
     private void openShelf() {
         getPresenter().goToShelf();
+    }
+
+    @Override
+    public void setContent(Node content) {
+        getRoot().setCenter(content);
     }
 }

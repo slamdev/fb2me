@@ -38,12 +38,8 @@ public class DialogController {
         show(new Stage(), presenter, true);
     }
 
-    public void showShell() {
-        show(context.stage, new ShellPresenter(context), false);
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void show(Stage stage, Object presenter, boolean modal) {
+    private void show(final Stage stage, Object presenter, boolean modal) {
         final View view = context.getView(getViewClass(presenter));
         stage.setTitle(view.getTitle());
         view.setPresenter(presenter);
@@ -80,6 +76,17 @@ public class DialogController {
                 context.optionsController.setStageSize(view);
             }
         };
+        stage.showingProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                if (arg2 == true) {
+                    context.eventsController.fire(new ViewEvent(view, ViewEvent.VIEW_SHOWN));
+                } else {
+                    context.eventsController.fire(new ViewEvent(view, ViewEvent.VIEW_HIDDEN));
+                }
+            }
+        });
         stage.widthProperty().addListener(changeListener);
         stage.heightProperty().addListener(changeListener);
         stage.xProperty().addListener(changeListener);
@@ -91,5 +98,9 @@ public class DialogController {
         } else {
             stage.show();
         }
+    }
+
+    public void showShell() {
+        show(context.stage, new ShellPresenter(context), false);
     }
 }

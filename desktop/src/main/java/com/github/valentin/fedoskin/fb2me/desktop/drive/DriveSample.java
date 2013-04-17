@@ -72,38 +72,6 @@ public class DriveSample {
 
     private static final java.io.File UPLOAD_FILE = new java.io.File(UPLOAD_FILE_PATH);
 
-    public static void main(String[] args) {
-        Preconditions.checkArgument(!UPLOAD_FILE_PATH.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
-                "Please enter the upload file path and download directory in %s", DriveSample.class);
-        try {
-            try {
-                // authorization
-                Credential credential = authorize();
-                // set up the global Drive instance
-                drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                        .setApplicationName(APPLICATION_NAME).build();
-                // run commands
-                DriveView.header1("Starting Resumable Media Upload");
-                File uploadedFile = uploadFile(false);
-                DriveView.header1("Updating Uploaded File Name");
-                File updatedFile = updateFileWithTestSuffix(uploadedFile.getId());
-                DriveView.header1("Starting Resumable Media Download");
-                downloadFile(false, updatedFile);
-                DriveView.header1("Starting Simple Media Upload");
-                uploadedFile = uploadFile(true);
-                DriveView.header1("Starting Simple Media Download");
-                downloadFile(true, uploadedFile);
-                DriveView.header1("Success!");
-                return;
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        System.exit(1);
-    }
-
     /** Authorizes the installed application to access user's protected data. */
     private static Credential authorize() throws Exception {
         // load client secrets
@@ -139,6 +107,38 @@ public class DriveSample {
         downloader.setDirectDownloadEnabled(useDirectDownload);
         downloader.setProgressListener(new FileDownloadProgressListener());
         downloader.download(new GenericUrl(uploadedFile.getDownloadUrl()), out);
+    }
+
+    public static void main(String[] args) {
+        Preconditions.checkArgument(!UPLOAD_FILE_PATH.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
+                "Please enter the upload file path and download directory in %s", DriveSample.class);
+        try {
+            try {
+                // authorization
+                Credential credential = authorize();
+                // set up the global Drive instance
+                drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                        .setApplicationName(APPLICATION_NAME).build();
+                // run commands
+                DriveView.header1("Starting Resumable Media Upload");
+                File uploadedFile = uploadFile(false);
+                DriveView.header1("Updating Uploaded File Name");
+                File updatedFile = updateFileWithTestSuffix(uploadedFile.getId());
+                DriveView.header1("Starting Resumable Media Download");
+                downloadFile(false, updatedFile);
+                DriveView.header1("Starting Simple Media Upload");
+                uploadedFile = uploadFile(true);
+                DriveView.header1("Starting Simple Media Download");
+                downloadFile(true, uploadedFile);
+                DriveView.header1("Success!");
+                return;
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        System.exit(1);
     }
 
     /** Updates the name of the uploaded file to have a "drivetest-" prefix. */

@@ -13,6 +13,10 @@ public interface OptionsView extends View<Presenter, AnchorPane> {
 
         void changeLanguageOption(Locale value);
 
+        Locale getLanguage();
+
         void reloadViews();
+
+        void resetOptions();
     }
 }
