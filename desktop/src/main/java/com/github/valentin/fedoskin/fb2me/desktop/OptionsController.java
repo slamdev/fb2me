@@ -127,7 +127,6 @@ public class OptionsController {
         Preferences preferences = Preferences.userRoot().node(ResourceUtil.getConfigProperty("preferences-node"));
         try {
             preferences.put(OPTIONS_NODE, MAPPER.writeValueAsString(options));
-            System.out.println(MAPPER.writeValueAsString(options));
         } catch (IOException e) {
             throw new RuntimeException();
         }
