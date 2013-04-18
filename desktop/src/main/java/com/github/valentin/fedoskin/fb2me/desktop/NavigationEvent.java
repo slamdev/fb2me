@@ -4,35 +4,30 @@ import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 
-public class ViewEvent extends Event {
+public class NavigationEvent extends Event {
 
     private static final long serialVersionUID = -5281769613671923503L;
 
     /**
      * Common supertype for all view event types.
      */
-    public static final EventType<ViewEvent> ANY = new EventType<>(Event.ANY, "VIEW");
+    public static final EventType<NavigationEvent> ANY = new EventType<>(Event.ANY, "VIEW");
 
     /**
      * This event occurs on view just after it is hidden.
      */
-    public static final EventType<ViewEvent> VIEW_HIDDEN = new EventType<>(ViewEvent.ANY, "VIEW_HIDDEN");
-
-    /**
-     * This event occurs on view just after it is shown.
-     */
-    public static final EventType<ViewEvent> VIEW_SHOWN = new EventType<>(ViewEvent.ANY, "VIEW_SHOWN");
+    public static final EventType<NavigationEvent> CHANGED = new EventType<>(NavigationEvent.ANY, "CHANGED");
 
     private final View<?, ?> view;
 
-    public ViewEvent(View<?, ?> source, EventType<? extends Event> eventType) {
+    public NavigationEvent(View<?, ?> source, EventType<? extends Event> eventType) {
         super(source, null, eventType);
         view = source;
     }
 
     @Override
-    public ViewEvent copyFor(Object newSource, EventTarget newTarget) {
-        return (ViewEvent) super.copyFor(newSource, newTarget);
+    public NavigationEvent copyFor(Object newSource, EventTarget newTarget) {
+        return (NavigationEvent) super.copyFor(newSource, newTarget);
     }
 
     /**
@@ -43,16 +38,16 @@ public class ViewEvent extends Event {
      * @param eventType the new eventType
      * @return the event copy with the fields substituted
      */
-    public ViewEvent copyFor(Object newSource, EventTarget newTarget, EventType<ViewEvent> type) {
-        ViewEvent e = copyFor(newSource, newTarget);
+    public NavigationEvent copyFor(Object newSource, EventTarget newTarget, EventType<NavigationEvent> type) {
+        NavigationEvent e = copyFor(newSource, newTarget);
         e.eventType = type;
         return e;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public EventType<ViewEvent> getEventType() {
-        return (EventType<ViewEvent>) super.getEventType();
+    public EventType<NavigationEvent> getEventType() {
+        return (EventType<NavigationEvent>) super.getEventType();
     }
 
     public View<?, ?> getView() {
