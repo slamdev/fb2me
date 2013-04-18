@@ -17,58 +17,6 @@ import javafx.scene.layout.StackPaneBuilder;
 
 public class SliderTextField extends HBox {
 
-    private SimpleIntegerProperty value = new SimpleIntegerProperty();
-
-    private final int startValue;
-
-    private final int endValue;
-
-    private SimpleStringProperty lbl = new SimpleStringProperty();
-
-    private SimpleBooleanProperty disabled = new SimpleBooleanProperty();
-
-    public SliderTextField(int startValue, int endValue, int pos) {
-        super();
-        this.startValue = startValue;
-        this.endValue = endValue;
-        value.set(pos);
-        setMinHeight(26);
-        configure();
-    }
-
-    public SliderTextField(int startValue, int endValue, int pos, String label) {
-        this(startValue, endValue, pos);
-        lbl.set(label);
-    }
-
-    private void configure() {
-        super.setMaxHeight(24);
-        super.setMinWidth(200);
-        super.setAlignment(Pos.CENTER_LEFT);
-        super.setSpacing(5);
-        Slider slider = new Slider(startValue, endValue, value.get());
-        slider.disableProperty().bind(disabled);
-        // slider.setShowTickLabels(true);
-        IntField intField = new IntField(startValue, endValue, value.get());
-        intField.disableProperty().bind(disabled);
-        intField.valueProperty().bindBidirectional(slider.valueProperty());
-        value.bindBidirectional(intField.valueProperty());
-        intField.setPrefWidth(50);
-        Label label = new Label();
-        label.setStyle("-fx-font-style:italic;");
-        label.textProperty().bind(lbl);
-        getChildren().addAll(intField,
-                StackPaneBuilder.create().children(label).prefWidth(30).alignment(Pos.CENTER_LEFT).build(), slider);
-    }
-
-    public SimpleIntegerProperty valueProperty() {
-        return this.value;
-    }
-
-    public SimpleBooleanProperty sliderDisableProperty() {
-        return this.disabled;
-    }
-
     /**
      * Integer Field for the TextField.
      * 
@@ -76,35 +24,25 @@ public class SliderTextField extends HBox {
      */
     class IntField extends TextField {
 
-        final private IntegerProperty value;
+        final private int maxValue;
 
         final private int minValue;
 
-        final private int maxValue;
-
-        // expose an integer value property for the text field.
-        public int getValue() {
-            return value.getValue();
-        }
-
-        public void setValue(int newValue) {
-            value.setValue(newValue);
-        }
-
-        public IntegerProperty valueProperty() {
-            return value;
-        }
+        final private IntegerProperty value;
 
         IntField(int minValue, int maxValue, int initialValue) {
-            if (minValue > maxValue)
+            if (minValue > maxValue) {
                 throw new IllegalArgumentException("IntField min value " + minValue + " greater than max value "
                         + maxValue);
-            if (maxValue < minValue)
+            }
+            if (maxValue < minValue) {
                 throw new IllegalArgumentException("IntField max value " + minValue + " less than min value "
                         + maxValue);
-            if (!((minValue <= initialValue) && (initialValue <= maxValue)))
+            }
+            if (!(minValue <= initialValue && initialValue <= maxValue)) {
                 throw new IllegalArgumentException("IntField initialValue " + initialValue + " not between " + minValue
                         + " and " + maxValue);
+            }
             // initialize the field values.
             this.minValue = minValue;
             this.maxValue = maxValue;
@@ -148,7 +86,7 @@ public class SliderTextField extends HBox {
                 }
             });
             // ensure any entered values lie inside the required range.
-            this.textProperty().addListener(new ChangeListener<String>() {
+            textProperty().addListener(new ChangeListener<String>() {
 
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
@@ -164,5 +102,70 @@ public class SliderTextField extends HBox {
                 }
             });
         }
+
+        // expose an integer value property for the text field.
+        public int getValue() {
+            return value.getValue();
+        }
+
+        public void setValue(int newValue) {
+            value.setValue(newValue);
+        }
+
+        public IntegerProperty valueProperty() {
+            return value;
+        }
+    }
+
+    private final SimpleBooleanProperty disabled = new SimpleBooleanProperty();
+
+    private final int endValue;
+
+    private final SimpleStringProperty lbl = new SimpleStringProperty();
+
+    private final int startValue;
+
+    private final SimpleIntegerProperty value = new SimpleIntegerProperty();
+
+    public SliderTextField(int startValue, int endValue, int pos) {
+        super();
+        this.startValue = startValue;
+        this.endValue = endValue;
+        value.set(pos);
+        setMinHeight(26);
+        configure();
+    }
+
+    public SliderTextField(int startValue, int endValue, int pos, String label) {
+        this(startValue, endValue, pos);
+        lbl.set(label);
+    }
+
+    public SimpleBooleanProperty sliderDisableProperty() {
+        return disabled;
+    }
+
+    public SimpleIntegerProperty valueProperty() {
+        return value;
+    }
+
+    private void configure() {
+        super.setMaxHeight(24);
+        super.setMinWidth(200);
+        super.setAlignment(Pos.CENTER_LEFT);
+        super.setSpacing(5);
+        Slider slider = new Slider(startValue, endValue, value.get());
+        slider.disableProperty().bind(disabled);
+        // slider.setShowTickLabels(true);
+        IntField intField = new IntField(startValue, endValue, value.get());
+        intField.disableProperty().bind(disabled);
+        intField.valueProperty().bindBidirectional(slider.valueProperty());
+        value.bindBidirectional(intField.valueProperty());
+        intField.setPrefWidth(50);
+        Label label = new Label();
+        label.setStyle("-fx-font-style:italic;");
+        label.textProperty().bind(lbl);
+        getChildren().addAll(intField,
+                StackPaneBuilder.create().children(label).prefWidth(30).alignment(Pos.CENTER_LEFT).build(), slider);
     }
 }

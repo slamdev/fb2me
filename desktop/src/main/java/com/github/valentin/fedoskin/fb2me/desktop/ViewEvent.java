@@ -6,8 +6,6 @@ import javafx.event.EventType;
 
 public class ViewEvent extends Event {
 
-    private static final long serialVersionUID = -5281769613671923503L;
-
     /**
      * Common supertype for all view event types.
      */
@@ -22,6 +20,8 @@ public class ViewEvent extends Event {
      * This event occurs on view just after it is shown.
      */
     public static final EventType<ViewEvent> VIEW_SHOWN = new EventType<>(ViewEvent.ANY, "VIEW_SHOWN");
+
+    private static final long serialVersionUID = -5281769613671923503L;
 
     private final View<?, ?> view;
 

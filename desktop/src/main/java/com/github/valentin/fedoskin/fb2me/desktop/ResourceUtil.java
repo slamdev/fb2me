@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 
 public final class ResourceUtil {
 
+    public static final Locale[] LOCALES = { Locale.forLanguageTag("en"), Locale.forLanguageTag("ru") };
+
     private static final String DEFAULT_CONFIG_RESOURCE = Main.class.getPackage().getName() + ".fb2me";
 
     private static Locale locale = Locale.getDefault();
-
-    public static final Locale[] LOCALES = { Locale.forLanguageTag("en"), Locale.forLanguageTag("ru") };
 
     /**
      * match ${ENV_VAR_NAME} or $ENV_VAR_NAME
@@ -52,6 +52,10 @@ public final class ResourceUtil {
         return ResourceBundle.getBundle(type.getName(), locale);
     }
 
+    public static void setLocale(Locale l) {
+        locale = l;
+    }
+
     /**
      * Returns input string with system variables references expanded, e.g. ${SOME_VAR}
      */
@@ -69,10 +73,6 @@ public final class ResourceUtil {
             }
         }
         return value;
-    }
-
-    public static void setLocale(Locale l) {
-        locale = l;
     }
 
     private ResourceUtil() {

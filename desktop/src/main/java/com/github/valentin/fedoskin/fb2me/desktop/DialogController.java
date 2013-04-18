@@ -38,6 +38,10 @@ public class DialogController {
         show(new Stage(), presenter, true);
     }
 
+    public void showShell() {
+        show(context.stage, new ShellPresenter(context), false);
+    }
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private void show(final Stage stage, Object presenter, boolean modal) {
         final View view = context.getView(getViewClass(presenter));
@@ -98,9 +102,5 @@ public class DialogController {
         } else {
             stage.show();
         }
-    }
-
-    public void showShell() {
-        show(context.stage, new ShellPresenter(context), false);
     }
 }

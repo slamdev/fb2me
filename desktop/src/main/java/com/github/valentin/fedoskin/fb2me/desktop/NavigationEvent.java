@@ -6,23 +6,23 @@ import javafx.event.EventType;
 
 public class NavigationEvent extends Event {
 
-    private static final long serialVersionUID = -5281769613671923503L;
-
     /**
      * Common supertype for all view event types.
      */
-    public static final EventType<NavigationEvent> ANY = new EventType<>(Event.ANY, "VIEW");
+    public static final EventType<NavigationEvent> ANY = new EventType<>(Event.ANY, "NAVIGATION");
 
     /**
      * This event occurs on view just after it is hidden.
      */
     public static final EventType<NavigationEvent> CHANGED = new EventType<>(NavigationEvent.ANY, "CHANGED");
 
-    private final View<?, ?> view;
+    private static final long serialVersionUID = -5281769613671923503L;
 
-    public NavigationEvent(View<?, ?> source, EventType<? extends Event> eventType) {
+    private final Object presenter;
+
+    public NavigationEvent(Object source, EventType<? extends Event> eventType) {
         super(source, null, eventType);
-        view = source;
+        presenter = source;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class NavigationEvent extends Event {
         return (EventType<NavigationEvent>) super.getEventType();
     }
 
-    public View<?, ?> getView() {
-        return view;
+    public Object getPresenter() {
+        return presenter;
     }
 
     /**
