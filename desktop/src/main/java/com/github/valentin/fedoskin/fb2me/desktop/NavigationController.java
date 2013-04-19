@@ -49,7 +49,7 @@ public class NavigationController {
     }
 
     @SuppressWarnings("unchecked")
-    private static Class<? extends View<?, ?>> getViewClass(Class type) {
+    private static Class<? extends View<?, ?>> getViewClass(Class<?> type) {
         Class<?>[] interfaces = type.getInterfaces();
         if (interfaces.length == 0) {
             throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");

@@ -2,11 +2,30 @@ package com.github.valentin.fedoskin.fb2me.desktop.options;
 
 import java.util.Locale;
 
+import com.github.valentin.fedoskin.fb2me.desktop.AbstractPlace;
 import com.github.valentin.fedoskin.fb2me.desktop.ApplicationContext;
 
 public class OptionsPresenter implements OptionsView.Presenter {
 
     private final ApplicationContext context;
+    
+    private static final Place PLACE = new Place(ApplicationContext context) {
+
+        @Override
+        public Object getPresenter() {
+            return new OptionsPresenter(context);
+        }
+
+        @Override
+        public Class<?> getPresenterType() {
+            return OptionsPresenter.class;
+        }
+    };
+    
+    public interface Place {
+        Object getPresenter();
+        Class<?> getPresenterType();
+    }
 
     public OptionsPresenter(ApplicationContext context) {
         this.context = context;
