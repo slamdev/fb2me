@@ -1,9 +1,9 @@
 package com.github.valentin.fedoskin.fb2me.desktop.shell;
 
 import com.github.valentin.fedoskin.fb2me.desktop.ApplicationContext;
-import com.github.valentin.fedoskin.fb2me.desktop.options.OptionsPresenter;
-import com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderPresenter;
-import com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfPresenter;
+import com.github.valentin.fedoskin.fb2me.desktop.options.OptionsPlace;
+import com.github.valentin.fedoskin.fb2me.desktop.reader.ReaderPlace;
+import com.github.valentin.fedoskin.fb2me.desktop.shelf.ShelfPlace;
 
 public class ShellPresenter implements ShellView.Presenter {
 
@@ -11,6 +11,11 @@ public class ShellPresenter implements ShellView.Presenter {
 
     public ShellPresenter(ApplicationContext applicationContext) {
         context = applicationContext;
+        // try {
+        // Thread.sleep(5000);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
     }
 
     @Override
@@ -20,16 +25,16 @@ public class ShellPresenter implements ShellView.Presenter {
 
     @Override
     public void goToReader() {
-        context.navigationController.goTo(new ReaderPresenter());
+        context.navigationController.goTo(new ReaderPlace(context));
     }
 
     @Override
     public void goToShelf() {
-        context.navigationController.goTo(new ShelfPresenter());
+        context.navigationController.goTo(new ShelfPlace(context));
     }
 
     @Override
     public void showOptions() {
-        context.dialogController.show(new OptionsPresenter(context));
+        context.dialogController.show(new OptionsPlace(context));
     }
 }

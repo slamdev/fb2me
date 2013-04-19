@@ -8,9 +8,6 @@ import java.util.prefs.Preferences;
 
 import javafx.stage.Stage;
 
-import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellPresenter;
-import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
-
 public class ApplicationContext {
 
     public final DialogController dialogController;
@@ -34,7 +31,7 @@ public class ApplicationContext {
         viewController = new ViewController(this);
         dialogController = new DialogController(this);
         navigationController = new NavigationController(this);
-        viewController.getView(ShellView.class).setPresenter(new ShellPresenter(this));
+        // viewController.getView(ShellView.class).setPresenter(new ShellPresenter(this));
         preferences.addPreferenceChangeListener(new PreferenceChangeListener() {
 
             @Override

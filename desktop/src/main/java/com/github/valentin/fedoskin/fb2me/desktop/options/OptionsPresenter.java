@@ -10,6 +10,11 @@ public class OptionsPresenter implements OptionsView.Presenter {
 
     public OptionsPresenter(ApplicationContext context) {
         this.context = context;
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

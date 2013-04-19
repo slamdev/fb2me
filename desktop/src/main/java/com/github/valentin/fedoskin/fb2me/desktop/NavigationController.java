@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
 
 import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellView;
 
@@ -48,6 +49,22 @@ public class NavigationController {
     }
 
     @SuppressWarnings("unchecked")
+    private static Class<? extends View<?, ?>> getViewClass(Class type) {
+        Class<?>[] interfaces = type.getInterfaces();
+        if (interfaces.length == 0) {
+            throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
+        }
+        for (Class<?> t : interfaces) {
+            if (t.getDeclaringClass() != null) {
+                if (View.class.isAssignableFrom(t.getDeclaringClass())) {
+                    return (Class<? extends View<?, ?>>) t.getDeclaringClass();
+                }
+            }
+        }
+        throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
+    }
+
+    @SuppressWarnings("unchecked")
     private static Class<? extends View<?, ?>> getViewClass(Object presenter) {
         Class<?>[] interfaces = presenter.getClass().getInterfaces();
         if (interfaces.length == 0) {
@@ -85,6 +102,21 @@ public class NavigationController {
                 } else if (forwardKeyCombination.match(e)) {
                     goByHistory(true);
                 }
+            }
+        });
+    }
+
+    public void goTo(AbstractPlace place) {
+        final View newView = context.getView(getViewClass(place.getPresenterType()));
+        context.getView(ShellView.class).setContent(newView.getRoot());
+        place.assignPresenter(new Callback<Object, Void>() {
+
+            @Override
+            public Void call(Object presenter) {
+                newView.setPresenter(presenter);
+                newView.refresh();
+                context.eventsController.fire(new NavigationEvent(presenter, NavigationEvent.CHANGED));
+                return null;
             }
         });
     }

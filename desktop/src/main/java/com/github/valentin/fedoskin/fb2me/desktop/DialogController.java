@@ -2,19 +2,26 @@ package com.github.valentin.fedoskin.fb2me.desktop;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import com.github.valentin.fedoskin.fb2me.desktop.shell.ShellPresenter;
+import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 
 public class DialogController {
 
     @SuppressWarnings("unchecked")
     private static Class<? extends View<?, ?>> getViewClass(Object presenter) {
-        Class<?>[] interfaces = presenter.getClass().getInterfaces();
+        Class<?> type;
+        if (presenter instanceof Class) {
+            type = (Class<?>) presenter;
+        } else {
+            type = presenter.getClass();
+        }
+        Class<?>[] interfaces = type.getInterfaces();
         if (interfaces.length == 0) {
             throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
         }
@@ -25,7 +32,8 @@ public class DialogController {
                 }
             }
         }
-        throw new IllegalArgumentException("Passed presenter should implement any View.Presenter interface");
+        throw new IllegalArgumentException("Passed presenter [" + presenter.getClass()
+                + "] should implement any View.Presenter interface");
     }
 
     private final ApplicationContext context;
@@ -34,19 +42,18 @@ public class DialogController {
         this.context = context;
     }
 
-    public void show(Object presenter) {
-        show(new Stage(), presenter, true);
+    public void show(AbstractPlace place) {
+        show(place, true);
     }
 
-    public void showShell() {
-        show(context.stage, new ShellPresenter(context), false);
+    public void show(AbstractPlace place, boolean modal) {
+        show(modal ? new Stage() : context.stage, place, modal);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void show(final Stage stage, Object presenter, boolean modal) {
-        final View view = context.getView(getViewClass(presenter));
+    private void show(final Stage stage, final AbstractPlace place, final boolean modal) {
+        final View view = context.getView(getViewClass(place.getPresenterType()));
         stage.setTitle(view.getTitle());
-        view.setPresenter(presenter);
         view.setStage(stage);
         Parent parent = view.getRoot();
         if (parent.getScene() != null) {
@@ -65,14 +72,13 @@ public class DialogController {
             stage.setWidth(w);
         }
         if (x != 0) {
-            stage.setX(x);
+            // stage.setX(x);
         }
         if (y != 0) {
-            stage.setY(y);
+            // stage.setY(y);
         }
         // /
         stage.setScene(new Scene(parent));
-        view.refresh();
         ChangeListener<Number> changeListener = new ChangeListener<Number>() {
 
             @Override
@@ -95,6 +101,21 @@ public class DialogController {
         stage.heightProperty().addListener(changeListener);
         stage.xProperty().addListener(changeListener);
         stage.yProperty().addListener(changeListener);
+        stage.setOnShown(new EventHandler<WindowEvent>() {
+
+            @Override
+            public void handle(WindowEvent e) {
+                place.assignPresenter(new Callback<Object, Void>() {
+
+                    @Override
+                    public Void call(Object presenter) {
+                        view.setPresenter(presenter);
+                        view.refresh();
+                        return null;
+                    }
+                });
+            }
+        });
         if (modal) {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(context.stage);

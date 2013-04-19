@@ -5,6 +5,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Label?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.valentin.fedoskin.fb2me.desktop.shell.ShellViewImpl">
     <center>
         <Pane />
@@ -33,6 +35,11 @@
         </MenuBar>
     </top>
     <bottom>
-        <HBox prefHeight="100.0" prefWidth="200.0" />
+        <VBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <Label text="Status string text sample" />
+                <ProgressIndicator fx:id="progressIndicator" />
+            </children>
+        </VBox>
     </bottom>
 </BorderPane>
