@@ -11,6 +11,8 @@ public class ViewEvent extends Event {
      */
     public static final EventType<ViewEvent> ANY = new EventType<>(Event.ANY, "VIEW");
 
+    private static final long serialVersionUID = -5281769613671923503L;
+
     /**
      * This event occurs on view just after it is hidden.
      */
@@ -20,8 +22,6 @@ public class ViewEvent extends Event {
      * This event occurs on view just after it is shown.
      */
     public static final EventType<ViewEvent> VIEW_SHOWN = new EventType<>(ViewEvent.ANY, "VIEW_SHOWN");
-
-    private static final long serialVersionUID = -5281769613671923503L;
 
     private final View<?, ?> view;
 

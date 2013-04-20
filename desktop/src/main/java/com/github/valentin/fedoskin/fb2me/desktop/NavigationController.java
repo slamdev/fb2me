@@ -106,10 +106,22 @@ public class NavigationController {
         });
     }
 
-    public void goTo(AbstractPlace place) {
+    private void goByHistory(boolean forward) {
+        Object presenter = forward ? history.getNext() : history.getPrevious();
+        if (presenter != null) {
+            goToInternal(presenter);
+        }
+    }
+
+    public void goTo(Object presenter) {
+        goToInternal(presenter);
+        context.eventsController.fire(new NavigationEvent(presenter, NavigationEvent.CHANGED));
+    }
+
+    public void goTo(Place place) {
         final View newView = context.getView(getViewClass(place.getPresenterType()));
         context.getView(ShellView.class).setContent(newView.getRoot());
-        place.assignPresenter(new Callback<Object, Void>() {
+        NavigationUtil.assignPresenter(context, place, new Callback<Object, Void>() {
 
             @Override
             public Void call(Object presenter) {
@@ -119,18 +131,6 @@ public class NavigationController {
                 return null;
             }
         });
-    }
-
-    public void goTo(Object presenter) {
-        goToInternal(presenter);
-        context.eventsController.fire(new NavigationEvent(presenter, NavigationEvent.CHANGED));
-    }
-
-    private void goByHistory(boolean forward) {
-        Object presenter = forward ? history.getNext() : history.getPrevious();
-        if (presenter != null) {
-            goToInternal(presenter);
-        }
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

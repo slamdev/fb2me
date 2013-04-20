@@ -141,14 +141,6 @@ public class SliderTextField extends HBox {
         lbl.set(label);
     }
 
-    public SimpleBooleanProperty sliderDisableProperty() {
-        return disabled;
-    }
-
-    public SimpleIntegerProperty valueProperty() {
-        return value;
-    }
-
     private void configure() {
         super.setMaxHeight(24);
         super.setMinWidth(200);
@@ -167,5 +159,13 @@ public class SliderTextField extends HBox {
         label.textProperty().bind(lbl);
         getChildren().addAll(intField,
                 StackPaneBuilder.create().children(label).prefWidth(30).alignment(Pos.CENTER_LEFT).build(), slider);
+    }
+
+    public SimpleBooleanProperty sliderDisableProperty() {
+        return disabled;
+    }
+
+    public SimpleIntegerProperty valueProperty() {
+        return value;
     }
 }

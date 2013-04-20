@@ -38,25 +38,14 @@ public class ShellViewImpl extends StageView<ShellView.Presenter, BorderPane> im
         return viewData;
     }
 
-    @Override
-    public DoubleProperty getProgressProperty() {
-        return progressIndicator.progressProperty();
-    }
-
-    @Override
-    public void refresh() {
-        super.refresh();
-        progressIndicator.setProgress(1.0);
-    }
-
-    @Override
-    public void setContent(Node content) {
-        getRoot().setCenter(content);
-    }
-
     @FXML
     private void close() {
         getPresenter().close();
+    }
+
+    @Override
+    public DoubleProperty getProgressProperty() {
+        return progressIndicator.progressProperty();
     }
 
     @FXML
@@ -72,5 +61,10 @@ public class ShellViewImpl extends StageView<ShellView.Presenter, BorderPane> im
     @FXML
     private void openShelf() {
         getPresenter().goToShelf();
+    }
+
+    @Override
+    public void setContent(Node content) {
+        getRoot().setCenter(content);
     }
 }

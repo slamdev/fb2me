@@ -122,28 +122,6 @@ public class SlideOut extends Application {
 
     WebView webView;
 
-    @Override
-    public void start(final Stage stage) throws Exception {
-        stage.setTitle("Slide out YouTube demo");
-        // create a WebView to show to the right of the SideBar.
-        webView = new WebView();
-        webView.setPrefSize(800, 600);
-        // create a sidebar with some content in it.
-        final Pane lyricPane = createSidebarContent();
-        SideBar sidebar = new SideBar(250, lyricPane);
-        VBox.setVgrow(lyricPane, Priority.ALWAYS);
-        // layout the scene.
-        final BorderPane layout = new BorderPane();
-        Pane mainPane = VBoxBuilder.create().spacing(10).children(sidebar.getControlButton(), webView).build();
-        layout.setLeft(sidebar);
-        layout.setCenter(mainPane);
-        // show the scene.
-        Scene scene = new Scene(layout);
-        scene.getStylesheets().add(getClass().getResource("slideout.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-    }
-
     private BorderPane createSidebarContent() {// create some content to put in the sidebar.
         final Text lyric = new Text();
         lyric.getStyleClass().add("lyric-text");
@@ -169,5 +147,27 @@ public class SlideOut extends Application {
         lyricPane.setCenter(lyric);
         lyricPane.setBottom(changeLyric);
         return lyricPane;
+    }
+
+    @Override
+    public void start(final Stage stage) throws Exception {
+        stage.setTitle("Slide out YouTube demo");
+        // create a WebView to show to the right of the SideBar.
+        webView = new WebView();
+        webView.setPrefSize(800, 600);
+        // create a sidebar with some content in it.
+        final Pane lyricPane = createSidebarContent();
+        SideBar sidebar = new SideBar(250, lyricPane);
+        VBox.setVgrow(lyricPane, Priority.ALWAYS);
+        // layout the scene.
+        final BorderPane layout = new BorderPane();
+        Pane mainPane = VBoxBuilder.create().spacing(10).children(sidebar.getControlButton(), webView).build();
+        layout.setLeft(sidebar);
+        layout.setCenter(mainPane);
+        // show the scene.
+        Scene scene = new Scene(layout);
+        scene.getStylesheets().add(getClass().getResource("slideout.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }

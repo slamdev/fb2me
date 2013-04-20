@@ -42,16 +42,16 @@ public class DialogController {
         this.context = context;
     }
 
-    public void show(AbstractPlace place) {
+    public void show(Place place) {
         show(place, true);
     }
 
-    public void show(AbstractPlace place, boolean modal) {
+    public void show(Place place, boolean modal) {
         show(modal ? new Stage() : context.stage, place, modal);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void show(final Stage stage, final AbstractPlace place, final boolean modal) {
+    private void show(final Stage stage, final Place place, final boolean modal) {
         final View view = context.getView(getViewClass(place.getPresenterType()));
         stage.setTitle(view.getTitle());
         view.setStage(stage);
@@ -105,7 +105,7 @@ public class DialogController {
 
             @Override
             public void handle(WindowEvent e) {
-                place.assignPresenter(new Callback<Object, Void>() {
+                NavigationUtil.assignPresenter(context, place, new Callback<Object, Void>() {
 
                     @Override
                     public Void call(Object presenter) {
